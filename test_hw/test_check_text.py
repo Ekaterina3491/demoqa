@@ -1,22 +1,21 @@
 from pages.demoqa import DemoQa
+from conftest import browser
 from pages.elements_page import ElementsPage
+from selenium.webdriver.common.by import By
+from selenium.common.exceptions import NoSuchElementException
 
 
-def test_check_footer_text(browser):
+def test_find_text_foot(browser):
+    footer_find_text = DemoQa(browser)
+    footer_find_text.visit()
+    footer_text = footer_find_text.footer.get_text()
+    assert footer_text == '© 2013-2020 TOOLSQA.COM | ALL RIGHTS RESERVED.'
+
+
+def test_find_text_elements(browser):
     demo_qa_page = DemoQa(browser)
-    demo_qa_page.visit()
-    assert demo_qa_page.text_footer.get_text() =='© 2013-2020 TOOLSQA.COM | ALL RIGHTS RESERVED.'
-
-def test_text_center(browser):
-    demo_qa_page = DemoQa(browser)
-    elem_page = ElementsPage(browser)
-
-    demo_qa_page.visit()
+    elements_page = ElementsPage(browser)
     demo_qa_page.btn_elements.click()
-    assert elem_page.text_center.get_text() == 'Please select an item from left to start practice.'
-    def test_page_elements(browser):
-    elem_page = ElementsPage(browser)
-    elem_page.visit()
-    assert elem_page.icon.exist()
-    assert elem_page.btn_sidebar_first.exist()
-    assert elem_page.btn_sidebar_first_textbox.exist()
+    assert elements_page.equal_url()
+
+    assert str(elements_page.center_element.get_text()) == 'Please select an item from left to start practice.'
